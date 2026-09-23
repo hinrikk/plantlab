@@ -34,3 +34,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ESP-IDF build output
+firmware/build/
+
+# ESP-IDF generated configuration
+firmware/sdkconfig
+firmware/sdkconfig.old

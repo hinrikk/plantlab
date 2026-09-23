@@ -41,3 +41,7 @@ firmware/build/
 # ESP-IDF generated configuration
 firmware/sdkconfig
 firmware/sdkconfig.old
+
+# Local/editor files
+.cache/
+.vscode/

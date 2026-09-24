@@ -1,6 +1,21 @@
 # plantlab
 
 ## Firmware
+idf 
+    to start venv and make idf.py available
 
-### Workflow
-edit C → idf.py flash monitor → test on ESP32 → Ctrl+T, then Ctrl+X to exit.
+idf.py build
+idf.py flash
+idf.py monitor
+
+Ctrl+T, then Ctrl+X to exit.
+
+
+## API
+
+Update Service:
+docker compose -f infrastructure/docker-compose.yml down
+docker compose -f infrastructure/docker-compose.yml up -d
+
+Run API:
+go run .

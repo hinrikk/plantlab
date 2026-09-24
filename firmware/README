@@ -1,7 +1,0 @@
-commands: 
-idf 
-    to start venv and make idf.py available
-
-idf.py build
-idf.py flash
-idf.py monitor

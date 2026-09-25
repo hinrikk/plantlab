@@ -1,15 +1,15 @@
-#include <stdio.h>
 
 #include "freertos/FreeRTOS.h"
-#include "freertos/event_groups.h"
+#include "freertos/task.h"
 
 #include "esp_event.h"
 #include "esp_log.h"
 #include "esp_netif.h"
 #include "esp_wifi.h"
+#include "esp_http_client.h"
 #include "nvs_flash.h"
 
-#include "esp_http_client.h"
+#include "driver/i2c_master.h"
 
 #define WIFI_SSID "Bretschnecker"
 #define WIFI_PASSWORD "danifraukebertmarten"
@@ -41,6 +41,81 @@ static void send_test_request(void)
     }
 
     esp_http_client_cleanup(client);
+}
+
+static void read_light_task(void *arg)
+{
+    // Configure I2C bus
+    i2c_master_bus_config_t bus_config = {
+        .i2c_port = I2C_NUM_0,
+        .sda_io_num = GPIO_NUM_8,
+        .scl_io_num = GPIO_NUM_9,
+        .clk_source = I2C_CLK_SRC_DEFAULT,
+        .glitch_ignore_cnt = 7,
+        .flags.enable_internal_pullup = true,
+    };
+
+    i2c_master_bus_handle_t bus_handle;
+
+    ESP_ERROR_CHECK(
+        i2c_new_master_bus(&bus_config, &bus_handle)
+    );
+
+    // Add BH1750
+    i2c_device_config_t device_config = {
+        .dev_addr_length = I2C_ADDR_BIT_LEN_7,
+        .device_address = 0x23,
+        .scl_speed_hz = 100000,
+    };
+
+    i2c_master_dev_handle_t sensor;
+
+    ESP_ERROR_CHECK(
+        i2c_master_bus_add_device(
+            bus_handle,
+            &device_config,
+            &sensor
+        )
+    );
+
+    // Measure continuously
+    while (1)
+    {
+        uint8_t command = 0x20;
+
+        ESP_ERROR_CHECK(
+            i2c_master_transmit(
+                sensor,
+                &command,
+                1,
+                1000
+            )
+        );
+
+        // Wait for BH1750 measurement
+        vTaskDelay(pdMS_TO_TICKS(200));
+
+        uint8_t data[2];
+
+        ESP_ERROR_CHECK(
+            i2c_master_receive(
+                sensor,
+                data,
+                2,
+                1000
+            )
+        );
+
+        uint16_t raw =
+            ((uint16_t)data[0] << 8) | data[1];
+
+        float lux = raw / 1.2f;
+
+        ESP_LOGI("bh1750", "Light: %.2f lux", lux);
+
+        // 200ms measurement + 800ms wait ≈ one reading/second
+        vTaskDelay(pdMS_TO_TICKS(800));
+    }
 }
 
 static void wifi_event_handler(
@@ -138,6 +213,13 @@ static void wifi_init(void)
 void app_main(void)
 {
     ESP_ERROR_CHECK(nvs_flash_init());
-
+    xTaskCreate(
+        read_light_task,    // function to run
+        "bh1750_task",      // name
+        4096,               // stack size
+        NULL,               // argument
+        5,                  // priority
+        NULL                // task handle
+    );
     wifi_init();
 }

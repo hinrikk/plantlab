@@ -45,3 +45,4 @@ firmware/sdkconfig.old
 # Local/editor files
 .cache/
 .vscode/
+TODO.txt

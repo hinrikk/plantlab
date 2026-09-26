@@ -46,3 +46,4 @@ firmware/sdkconfig.old
 .cache/
 .vscode/
 TODO.txt
+firmware/main/secrets.h

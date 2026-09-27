@@ -12,6 +12,7 @@ module.exports = {
         rose: '#f7adad',
       },
       fontFamily: {
+        pixelTitle: ['VT'],
         pixel: ['GeistPixel'],
       },
     },

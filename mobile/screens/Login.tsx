@@ -15,11 +15,9 @@ export default function LoginScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }} className="bg-background px-4">
       <View className="flex-1 justify-center gap-y-8">
-        <Text
-          className="font-pixel mb-12 text-center text-4xl text-black"
-          style={{ fontWeight: '700' }}>
-          {'PLANT LAB'}
-        </Text>
+        <View className="mb-8 items-center">
+          <PixelSprite source={require('../assets/pixel/Flask.png')} scale={4} />
+        </View>
 
         <PixelPanel source={require('../assets/pixel/panel.png')} scale={4}>
           <TextInput
@@ -39,11 +37,16 @@ export default function LoginScreen() {
           />
         </PixelPanel>
 
-        <Pressable
-          className="bg-rose font-pixel mt-4 items-center border-4 border-black p-4"
-          onPress={handleLogin}>
-          <Text className="text-xl font-bold text-black">{'LOGIN'}</Text>
-        </Pressable>
+        <View className="relative mt-4 pb-2 pr-2">
+          {/* Shadow */}
+          <View className="absolute bottom-0 left-2 right-0 top-2 bg-black" />
+
+          <Pressable
+            className="items-center border-4 border-black bg-[#ff7c5c] p-4"
+            onPress={handleLogin}>
+            <Text className="font-pixel text-xl text-black">LOGIN</Text>
+          </Pressable>
+        </View>
       </View>
     </SafeAreaView>
   );

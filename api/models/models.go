@@ -10,13 +10,19 @@ type User struct {
 
 type Plant struct {
 	ID     int64  `gorm:"primaryKey;autoIncrement"`
-	UserID int64  `gorm:"not null"`
+	UserID int64  `gorm:"not null;index"`
 	Name   string `gorm:"not null"`
+}
+
+type Device struct {
+	ID      int64  `gorm:"primaryKey;autoIncrement"`
+	PlantID int64  `gorm:"not null;index"`
+	Name    string `gorm:"not null"`
 }
 
 type Reading struct {
 	ID        int64     `gorm:"primaryKey;autoIncrement"`
-	PlantID   int64     `gorm:"not null"`
+	DeviceID  int64     `gorm:"not null;index"`
 	LightLux  float32   `gorm:"not null"`
 	CreatedAt time.Time `gorm:"autoCreateTime"`
 }

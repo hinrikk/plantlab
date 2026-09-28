@@ -8,6 +8,7 @@ import (
 
 	"plantlab/api/config"
 	"plantlab/api/handlers"
+	"plantlab/api/middleware"
 )
 
 func main() {
@@ -23,6 +24,23 @@ func main() {
 	mux.HandleFunc(
 		"POST /readings",
 		handlers.CreateReading(db),
+	)
+
+	mux.HandleFunc(
+		"POST /auth/register",
+		handlers.Register(db),
+	)
+
+	mux.HandleFunc(
+		"POST /auth/login",
+		handlers.Login(db),
+	)
+
+	mux.HandleFunc(
+		"POST /plants",
+		middleware.Authenticate(
+			handlers.CreatePlant(db),
+		),
 	)
 
 	log.Println("Server running on port 3000")

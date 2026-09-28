@@ -29,6 +29,7 @@ func ConnectDatabase() *gorm.DB {
 	if err := db.AutoMigrate(
 		&models.User{},
 		&models.Plant{},
+		&models.Device{},
 		&models.Reading{},
 	); err != nil {
 		panic(err)

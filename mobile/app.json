@@ -4,12 +4,15 @@
     "slug": "mobile",
     "version": "1.0.0",
 
+    "scheme": "plantlab",
+
     "web": {
       "favicon": "./assets/favicon.png"
     },
 
     "experiments": {
-      "tsconfigPaths": true
+      "tsconfigPaths": true,
+      "typedRoutes": true
     },
 
     "plugins": [
@@ -19,18 +22,22 @@
           "image": "./assets/splash.png",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-secure-store",
+      "expo-router",
+      "expo-status-bar"
     ],
 
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-
     "userInterfaceStyle": "light",
 
     "assetBundlePatterns": ["**/*"],
+
     "ios": {
       "supportsTablet": true
     },
+
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",

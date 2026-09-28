@@ -10,7 +10,7 @@ import (
 )
 
 type ReadingRequest struct {
-	PlantID  int64   `json:"plant_id"`
+	DeviceID int64   `json:"device_id"`
 	LightLux float32 `json:"light_lux"`
 }
 
@@ -29,14 +29,14 @@ func CreateReading(db *gorm.DB) http.HandlerFunc {
 		}
 
 		// Validate the request
-		if reading.PlantID <= 0 {
-			http.Error(w, "Invalid plant_id", http.StatusBadRequest)
+		if reading.DeviceID <= 0 {
+			http.Error(w, "Invalid device_id", http.StatusBadRequest)
 			return
 		}
 
 		// Create the database record
 		record := models.Reading{
-			PlantID:  reading.PlantID,
+			DeviceID: reading.DeviceID,
 			LightLux: reading.LightLux,
 		}
 

@@ -1,6 +1,7 @@
 idf_component_register(
-    SRCS "light_sensor.c" "firmware.c" "wifi.c" "api.c"
+    SRCS "environment_sensor.c" "light_sensor.c" "firmware.c" "wifi.c" "api.c"
     INCLUDE_DIRS "."
+    REQUIRES bme68x
     PRIV_REQUIRES
         esp_wifi
         esp_event

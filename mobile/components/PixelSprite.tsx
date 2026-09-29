@@ -1,20 +1,11 @@
-import {
-  Canvas,
-  Image,
-  useImage,
-  FilterMode,
-  MipmapMode,
-} from "@shopify/react-native-skia";
+import { Canvas, Image, useImage, FilterMode, MipmapMode } from '@shopify/react-native-skia';
 
 type Props = {
   source: number;
   scale?: number;
 };
 
-export default function PixelSprite({
-  source,
-  scale = 4,
-}: Props) {
+export default function PixelSprite({ source, scale = 4 }: Props) {
   const image = useImage(source);
 
   if (!image) return null;

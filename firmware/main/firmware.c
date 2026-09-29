@@ -8,25 +8,28 @@
 #include "wifi.h"
 #include "api.h"
 #include "light_sensor.h"
+#include "environment_sensor.h"
 
-static void read_light_task(void *arg)
+static void read_sensors_task(void *arg)
 {
-    TickType_t last_sent = xTaskGetTickCount();
-
     while (1)
     {
         float lux = light_sensor_read_lux();
 
-        ESP_LOGI("bh1750", "Light: %.2f lux", lux);
+        environment_reading_t environment =
+            environment_sensor_read();
 
-        if (wifi_is_connected() &&
-            xTaskGetTickCount() - last_sent >= pdMS_TO_TICKS(30000))
-        {
-            last_sent = xTaskGetTickCount();
-            api_send_reading(lux);
-        }
+        ESP_LOGI("sensors",
+            "Light: %.2f lux | Temp: %.2f C | Humidity: %.2f %%",
+            lux,
+            environment.temperature,
+            environment.humidity
+        );
 
-        vTaskDelay(pdMS_TO_TICKS(800));
+        // Later:
+        // api_send_reading(lux, environment);
+
+        vTaskDelay(pdMS_TO_TICKS(2000));
     }
 }
 
@@ -36,10 +39,11 @@ void app_main(void)
 
     wifi_init();
     light_sensor_init();
+    environment_sensor_init();
 
     xTaskCreate(
-        read_light_task,
-        "bh1750_task",
+        read_sensors_task,
+        "sensors_task",
         4096,
         NULL,
         5,

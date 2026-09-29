@@ -6,6 +6,9 @@ module.exports = {
       colors: {
         background: '#ccfbfa',
         rose: '#f7adad',
+        yellow: '#ffde1f',
+        blue: '#72b3d3',
+        green: '#0161bb',
       },
       fontFamily: {
         pixelTitle: ['VT'],

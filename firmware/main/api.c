@@ -10,7 +10,12 @@
 
 static const char *TAG = "api";
 
-void api_send_reading(float lux)
+void api_send_reading(
+    int64_t device_id,
+    float light_lux,
+    float temperature,
+    float humidity
+)
 {
     esp_http_client_config_t config = {
         .url = API_URL,
@@ -25,13 +30,16 @@ void api_send_reading(float lux)
         "application/json"
     );
 
-    char json[128];
+    char json[256];
 
     snprintf(
         json,
         sizeof(json),
-        "{\"plant_id\":2,\"light_lux\":%.2f}",
-        lux
+        "{\"device_id\":%lld,\"light_lux\":%.2f,\"temperature\":%.2f,\"humidity\":%.2f}",
+        (long long)device_id,
+        light_lux,
+        temperature,
+        humidity
     );
 
     esp_http_client_set_post_field(

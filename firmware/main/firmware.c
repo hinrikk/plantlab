@@ -26,8 +26,13 @@ static void read_sensors_task(void *arg)
             environment.humidity
         );
 
-        // Later:
-        // api_send_reading(lux, environment);
+        // id currently hardcoded, later: make device identity/configuration more robust
+        api_send_reading(
+            1,
+            lux,
+            environment.temperature,
+            environment.humidity
+        );
 
         vTaskDelay(pdMS_TO_TICKS(2000));
     }

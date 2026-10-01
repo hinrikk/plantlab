@@ -23,6 +23,7 @@ type Device struct {
 type Reading struct {
 	ID          int64     `gorm:"primaryKey;autoIncrement"`
 	DeviceID    int64     `gorm:"not null;index"`
+	Device      Device    `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	LightLux    float32   `gorm:"not null"`
 	Temperature float32   `gorm:"not null"`
 	Humidity    float32   `gorm:"not null"`

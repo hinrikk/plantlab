@@ -43,6 +43,13 @@ func main() {
 		),
 	)
 
+	mux.HandleFunc(
+		"PUT /plants/{plantID}/device",
+		middleware.Authenticate(
+			handlers.AddDeviceToPlant(db),
+		),
+	)
+
 	log.Println("Server running on port 3000")
 
 	if err := http.ListenAndServe(":3000", mux); err != nil {

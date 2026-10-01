@@ -10,16 +10,14 @@ import (
 )
 
 type ReadingRequest struct {
-	DeviceID int64   `json:"device_id"`
-	LightLux float32 `json:"light_lux"`
+	DeviceID    int64   `json:"device_id"`
+	LightLux    float32 `json:"light_lux"`
+	Temperature float32 `json:"temperature"`
+	Humidity    float32 `json:"humidity"`
 }
 
 func CreateReading(db *gorm.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodPost {
-			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-			return
-		}
 
 		var reading ReadingRequest
 
@@ -36,8 +34,10 @@ func CreateReading(db *gorm.DB) http.HandlerFunc {
 
 		// Create the database record
 		record := models.Reading{
-			DeviceID: reading.DeviceID,
-			LightLux: reading.LightLux,
+			DeviceID:    reading.DeviceID,
+			LightLux:    reading.LightLux,
+			Temperature: reading.Temperature,
+			Humidity:    reading.Humidity,
 		}
 
 		// Save it to PostgreSQL
@@ -46,8 +46,13 @@ func CreateReading(db *gorm.DB) http.HandlerFunc {
 			return
 		}
 
-		// Only respond with success after saving
-		fmt.Printf("Saved light reading: %f\n", reading.LightLux)
+		fmt.Printf(
+			"Saved reading: device=%d light=%.2f lux temp=%.2f C humidity=%.2f%%\n",
+			reading.DeviceID,
+			reading.LightLux,
+			reading.Temperature,
+			reading.Humidity,
+		)
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)

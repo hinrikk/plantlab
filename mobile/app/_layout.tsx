@@ -25,6 +25,9 @@ function RootNavigator() {
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     GeistPixel: require('../assets/fonts/GeistPixel-Regular-VariableFont_ELSH.ttf'),
+    VT: require('../assets/fonts/VT323-Regular.ttf'),
+    Pixelify: require('../assets/fonts/PixelifySans-VariableFont_wght.ttf'),
+    Tiny5: require('../assets/fonts/Tiny5-Regular.ttf'),
   });
 
   if (!fontsLoaded) {

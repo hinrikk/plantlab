@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+	"time"
 
 	"plantlab/api/middleware"
 	"plantlab/api/models"
@@ -15,6 +16,20 @@ type CreatePlantRequest struct {
 }
 type AddDeviceRequest struct {
 	DeviceID int64 `json:"device_id"`
+}
+
+type ReadingResponse struct {
+	LightLux    float32   `json:"light_lux"`
+	Temperature float32   `json:"temperature"`
+	Humidity    float32   `json:"humidity"`
+	CreatedAt   time.Time `json:"created_at"`
+}
+
+type PlantResponse struct {
+	ID            int64            `json:"id"`
+	Name          string           `json:"name"`
+	DeviceID      *int64           `json:"device_id"`
+	LatestReading *ReadingResponse `json:"latest_reading"`
 }
 
 func CreatePlant(db *gorm.DB) http.HandlerFunc {
@@ -120,5 +135,59 @@ func AddDeviceToPlant(db *gorm.DB) http.HandlerFunc {
 
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(plant)
+	}
+}
+
+func GetPlants(db *gorm.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		userID, ok := r.Context().Value(middleware.UserIDKey).(int64)
+		if !ok {
+			http.Error(w, "User not found in context", http.StatusUnauthorized)
+			return
+		}
+
+		var plants []models.Plant
+
+		if err := db.WithContext(r.Context()).
+			Where("user_id = ?", userID).
+			Find(&plants).Error; err != nil {
+
+			http.Error(w, "Failed to get plants", http.StatusInternalServerError)
+			return
+		}
+
+		var response []PlantResponse
+
+		for _, plant := range plants {
+			plantResponse := PlantResponse{
+				ID:       plant.ID,
+				Name:     plant.Name,
+				DeviceID: plant.DeviceID,
+			}
+
+			if plant.DeviceID != nil {
+				var reading models.Reading
+
+				err := db.WithContext(r.Context()).
+					Where("device_id = ?", *plant.DeviceID).
+					Order("created_at DESC").
+					First(&reading).Error
+
+				if err == nil {
+					plantResponse.LatestReading = &ReadingResponse{
+						LightLux:    reading.LightLux,
+						Temperature: reading.Temperature,
+						Humidity:    reading.Humidity,
+						CreatedAt:   reading.CreatedAt,
+					}
+				}
+			}
+
+			// Append AFTER we've added the reading
+			response = append(response, plantResponse)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(response)
 	}
 }

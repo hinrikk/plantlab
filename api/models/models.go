@@ -9,10 +9,10 @@ type User struct {
 }
 
 type Plant struct {
-	ID       int64  `gorm:"primaryKey;autoIncrement"`
-	UserID   int64  `gorm:"not null;index"`
-	Name     string `gorm:"not null"`
-	DeviceID *int64 `gorm:"uniqueIndex"`
+	ID       int64  `json:"id" gorm:"primaryKey;autoIncrement"`
+	UserID   int64  `json:"user_id" gorm:"not null;index"`
+	Name     string `json:"name" gorm:"not null"`
+	DeviceID *int64 `json:"device_id" gorm:"index"`
 }
 
 type Device struct {

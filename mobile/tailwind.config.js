@@ -11,8 +11,8 @@ module.exports = {
         green: '#0161bb',
       },
       fontFamily: {
-        pixelTitle: ['VT'],
-        pixel: ['GeistPixel'],
+        pixelTitle: ['Tiny5'],
+        pixel: ['Pixelify'],
       },
     },
   },

@@ -46,7 +46,7 @@ export default function LoginScreen() {
       <View className="flex-1 justify-center gap-y-8">
         <View className="items-center">
           <PixelSprite source={require('../assets/pixel/Flask2.png')} scale={4} />
-          <Text className="mt-0 font-pixelTitle text-8xl">{'PLANTLAB'}</Text>
+          <Text className="mt-0 font-pixelTitle text-7xl">{'PLANTLAB'}</Text>
         </View>
 
         <PixelInput

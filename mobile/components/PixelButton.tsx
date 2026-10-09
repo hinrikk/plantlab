@@ -1,4 +1,5 @@
 import { Pressable, Text, View } from 'react-native';
+import { twMerge } from 'tailwind-merge';
 
 type PixelButtonProps = {
   title: string;
@@ -14,7 +15,7 @@ export default function PixelButton({ title, onPress, className = '' }: PixelBut
 
       <Pressable
         onPress={onPress}
-        className={`items-center border-4 border-black bg-[#ff7c5c] p-4 ${className}`}>
+        className={twMerge('items-center border-4 border-black bg-yellow p-4', className)}>
         <Text className="font-pixelTitle text-3xl text-black">{title}</Text>
       </Pressable>
     </View>

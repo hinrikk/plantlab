@@ -1,11 +1,12 @@
 import { usePlantsApi } from 'api/usePlantsApi';
-import PixelPanel from 'components/PixelPanel';
-import PixelSprite from 'components/PixelSprite';
+import PixelIconButton from 'components/PixelIconButton';
 import PlantCard from 'components/PlantCard';
 import { UnitDisplay } from 'components/UnitDisplay';
+import { useAuth } from 'context/AuthContext';
 import { useEffect, useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
 
 type Plant = {
   id: number;
@@ -21,6 +22,7 @@ type Plant = {
 
 export default function Home() {
   const { getPlants, createPlant } = usePlantsApi();
+  const { setToken } = useAuth();
   const [plants, setPlants] = useState<Plant[]>([]);
 
   async function loadPlants() {
@@ -47,10 +49,12 @@ export default function Home() {
 
   return (
     <SafeAreaView className="flex-1 flex-col bg-background px-4">
-      <View className="items-end justify-end">
-        <Pressable onPress={handleAddPlant}>
-          <PixelSprite source={require('../assets/pixel/Add.png')} scale={2} />
-        </Pressable>
+      <View className="mb-4 flex-row items-end justify-between">
+        <PixelIconButton
+          source={require('../assets/pixel/Settings.png')}
+          onPress={() => router.push('/settings')}
+        />
+        <PixelIconButton source={require('../assets/pixel/Add.png')} onPress={handleAddPlant} />
       </View>
 
       <View className="flex-1 gap-2 pt-4">

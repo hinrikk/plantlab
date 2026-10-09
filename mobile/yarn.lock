@@ -583,6 +583,13 @@
     "@babel/helper-string-parser" "^7.29.7"
     "@babel/helper-validator-identifier" "^7.29.7"
 
+"@egjs/hammerjs@^2.0.17":
+  version "2.0.17"
+  resolved "https://registry.yarnpkg.com/@egjs/hammerjs/-/hammerjs-2.0.17.tgz#5dc02af75a6a06e4c2db0202cae38c9263895124"
+  integrity sha512-XQsZgjm2EcVUiZQf11UBJQfmZeEmOW8DpI1gsFeln6w0ae0ii4dMQEQ0kjl6DspdWX1aGY1/loyXnP0JS06e/A==
+  dependencies:
+    "@types/hammerjs" "^2.0.36"
+
 "@emnapi/core@1.10.0":
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/@emnapi/core/-/core-1.10.0.tgz#380ccc8f2412ea22d1d972df7f8ee23a3b9c7467"
@@ -1533,6 +1540,11 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.9.tgz#cf3f0e876d7bee15a93ab925b82bf570a3904a24"
   integrity sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg==
 
+"@types/hammerjs@^2.0.36":
+  version "2.0.46"
+  resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.46.tgz#381daaca1360ff8a7c8dff63f32e69745b9fb1e1"
+  integrity sha512-ynRvcq6wvqexJ9brDMS4BnBLzmr0e14d6ZJTEShTBWKymQiHwlAyGu0ZPEFI2Fh1U53F7tN9ufClWM5KvqkKOw==
+
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0":
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.6.tgz#7739c232a1fee9b4d3ce8985f314c0c6d33549d7"
@@ -1568,6 +1580,20 @@
   integrity sha512-dsqMQQoeTLqu9wynDD00q573mNzso3IdQOAfHRJqLCcmCFPoGo9A1bDpUcv/9tnKpErQWv9uKeGfl37EIS02Yg==
   dependencies:
     undici-types "~8.9.0"
+
+"@types/react-test-renderer@^19.1.0":
+  version "19.3.0"
+  resolved "https://registry.yarnpkg.com/@types/react-test-renderer/-/react-test-renderer-19.3.0.tgz#719edd157d3982cbd905826e6a019d23709fc063"
+  integrity sha512-TX4p2D4Z2oigM3SXU7+QyLSUnSR0vR1S1Pfxm/qFL9nHQ3jclgi6ioGoWQmlIr1DeKRVmPJrmNlhgM0JlWlLUg==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*":
+  version "19.3.0"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.3.0.tgz#3b3ce8d8c1627fb5ccd4dadd57ef445c5a153b77"
+  integrity sha512-N0rFCuH9YoxG9/m61l9MfpJKfmLOVU0em7ipIz6TRgSSkvReLB9vL85GB+yr8Bs5leqpvg96JSwF4ZS1s4viQg==
+  dependencies:
+    csstype "^3.2.2"
 
 "@types/react@~19.2.2":
   version "19.2.18"
@@ -3118,18 +3144,25 @@ event-target-shim@^5.0.0:
   resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-5.0.1.tgz#5d4d3ebdf9583d63a5333ce2deb7480ab2b05789"
   integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
 
-expo-asset@~56.0.24:
-  version "56.0.24"
-  resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-56.0.24.tgz#bd295465ee3e3721259acce03043d108d094f81a"
-  integrity sha512-Zy41rl0gtfyZmzV1bzxZype1iEAKz/FiTKOw3yTvA5I2biGnDSh0GbTAYQzkrqYbhnyJAqIe+sXe2eo4DfJ8KQ==
+expo-asset@~56.0.25:
+  version "56.0.25"
+  resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-56.0.25.tgz#63d848ccb53e7cc1610c8c1a7eda594809c6ae11"
+  integrity sha512-D8Gzrj/c/FwgRyx+WLNZdKNTXJLwkNDV9meEabNzWwZFI7mxv8NRYhyzZuJSu4ndaviausTnSGEzAHGrIYicnA==
   dependencies:
     "@expo/image-utils" "^0.10.5"
-    expo-constants "~56.0.25"
+    expo-constants "~56.0.27"
 
-expo-constants@~56.0.25, expo-constants@~56.0.26:
+expo-constants@~56.0.26:
   version "56.0.26"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-56.0.26.tgz#0df86519dde5a7c1c571a2e2b08068fd022ca1ec"
   integrity sha512-gl1cRg1hn5DcYHDsCuXTOcpArdaKsFM+0stNVzdoxce7ULcQfOKESiG6UZ2jEJrsI6IdO1B/6rOSb/oZR8fYdA==
+  dependencies:
+    "@expo/env" "~2.3.1"
+
+expo-constants@~56.0.27:
+  version "56.0.27"
+  resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-56.0.27.tgz#d9ef4834f402d0d3f867c0ca57854a81527be094"
+  integrity sha512-uSCNjve0uHm81BqCn8uRfliWd6FaNMbZBNM1EH7HNWSXVf5T3J3W5laL2DHPR7m+L91JXHxqux5+qsL+C3iWrA==
   dependencies:
     "@expo/env" "~2.3.1"
 
@@ -3173,19 +3206,19 @@ expo-modules-autolinking@~56.0.23:
     chalk "^4.1.0"
     commander "^7.2.0"
 
-expo-modules-core@~56.0.26:
-  version "56.0.26"
-  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-56.0.26.tgz#fbe05329dbc0abd141080e6f6241e42313f219a4"
-  integrity sha512-pS1qSxr2hFmo/mQT+rgTzNKxo9h0oeq/tI/sY6gX7MQFyieGuQ6is4SjmPbUkiwXm0htqjw4jrGq/SMbxaxJwg==
+expo-modules-core@~56.0.27:
+  version "56.0.27"
+  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-56.0.27.tgz#066a656d59f3bd1d9e4b1f81ac73635587630732"
+  integrity sha512-Y/KuCJGsVmQfht9F7aorWoROaPtVp6DFT/5H3wwmhZKM22D7SYGiSV9mtXiV2LfFP5N9jBh/0iwtXFAaYajsIQ==
   dependencies:
     "@expo/expo-modules-macros-plugin" "0.2.2"
-    expo-modules-jsi "~56.0.13"
+    expo-modules-jsi "~56.0.14"
     invariant "^2.2.4"
 
-expo-modules-jsi@~56.0.13:
-  version "56.0.13"
-  resolved "https://registry.yarnpkg.com/expo-modules-jsi/-/expo-modules-jsi-56.0.13.tgz#7fbf903ec4d8a8c3ef458d22c059273f4aff35e1"
-  integrity sha512-If9W5Me4aSaBSgLD6MPUm6YDVB0KNsK2gIEaTeLEO9dnTqmRcJ3WM206S8iix+4GSvXMOyE8mLlmqE1cQMUuyQ==
+expo-modules-jsi@~56.0.14:
+  version "56.0.14"
+  resolved "https://registry.yarnpkg.com/expo-modules-jsi/-/expo-modules-jsi-56.0.14.tgz#47855f87928621b352a0e038e913be245b4b0d6e"
+  integrity sha512-Hzjq8plGfjGb7OsensIBYkzQsVLVotws2arFVZJb6LV6vE9L8B3E1xUlejzlAsUR5eRKE3aImK+P+4X2slGVGQ==
 
 expo-router@~56.2.21:
   version "56.2.21"
@@ -3254,10 +3287,10 @@ expo-symbols@^56.0.7:
     "@expo-google-fonts/material-symbols" "^0.4.1"
     sf-symbols-typescript "^2.0.0"
 
-expo@~56.0.4:
-  version "56.0.22"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-56.0.22.tgz#874e23dafa84dd7660d0e6ab69645606dead653d"
-  integrity sha512-Vv1HmQqo7DxW+4hzJeeXc+eHuqmbl22w6q7dgZKZJNrgAt5Xb9yoU4seJVs6jH5hM4iwHVGkxIY7lIa9dBJKGg==
+expo@~56.0.23:
+  version "56.0.23"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-56.0.23.tgz#89968888569f0259edcd7365ba69172501c4dc1e"
+  integrity sha512-SPPgww/V24xpe+vELAIKOrkwKF8g8o6TLfaIMqdO56PtTvCUvJQPfJfnj/bCsQJFIjoQVHOZZ03B6Zx/VYAPsQ==
   dependencies:
     "@babel/runtime" "^7.20.0"
     "@expo/cli" "^56.1.26"
@@ -3272,13 +3305,13 @@ expo@~56.0.4:
     "@expo/metro-config" "~56.0.19"
     "@ungap/structured-clone" "^1.3.0"
     babel-preset-expo "~56.0.20"
-    expo-asset "~56.0.24"
-    expo-constants "~56.0.26"
+    expo-asset "~56.0.25"
+    expo-constants "~56.0.27"
     expo-file-system "~56.0.11"
     expo-font "~56.0.7"
     expo-keep-awake "~56.0.3"
     expo-modules-autolinking "~56.0.23"
-    expo-modules-core "~56.0.26"
+    expo-modules-core "~56.0.27"
     pretty-format "^29.7.0"
     react-refresh "^0.14.2"
     whatwg-url-minimum "^0.1.2"
@@ -3652,6 +3685,13 @@ hermes-parser@^0.25.1:
   integrity sha512-6pEjquH3rqaI6cYAXYPcz9MS4rY6R4ngRgrgfDshRptUZIc3lw0MCIJIGDj9++mfySOuPTHB4nrSW99BCvOPIA==
   dependencies:
     hermes-estree "0.25.1"
+
+hoist-non-react-statics@^3.3.0:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
+  integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
+  dependencies:
+    react-is "^16.7.0"
 
 hosted-git-info@^7.0.0:
   version "7.0.2"
@@ -5328,7 +5368,7 @@ react-freeze@^1.0.0:
   resolved "https://registry.yarnpkg.com/react-freeze/-/react-freeze-1.0.4.tgz#cbbea2762b0368b05cbe407ddc9d518c57c6f3ad"
   integrity sha512-r4F0Sec0BLxWicc7HEyo2x3/2icUTrRmDjaaRyzzn+7aDyFZliszMDOgLVwSnQnYENOlL1o569Ze2HZefk8clA==
 
-react-is@^16.13.1:
+react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
@@ -5362,6 +5402,16 @@ react-native-drawer-layout@^4.2.2:
   dependencies:
     color "^4.2.3"
     use-latest-callback "^0.2.4"
+
+react-native-gesture-handler@~2.31.1:
+  version "2.31.2"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.31.2.tgz#f1832592619db00d70b036f73cf48f54cb415d71"
+  integrity sha512-rw5q74i2AfS7YGYdbxQDhOU7xqgY6WRM1132/CCm3erqjblhECZDZFHIm0tteHoC9ih24wogVBVVzcTBQtZ+5A==
+  dependencies:
+    "@egjs/hammerjs" "^2.0.17"
+    "@types/react-test-renderer" "^19.1.0"
+    hoist-non-react-statics "^3.3.0"
+    invariant "^2.2.4"
 
 react-native-is-edge-to-edge@^1.3.1:
   version "1.3.1"
@@ -6135,6 +6185,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
+
+tailwind-merge@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/tailwind-merge/-/tailwind-merge-3.7.0.tgz#61e9a67ab11b64138dea7d4fa5b74a33e17f2c87"
+  integrity sha512-XPPUyAc+cvspz3lHTcR/QgPfW2A0lv/xQNIjX3HGhLR+Nq2lHaLq5MtTesHn8GUr3W3DguT2KT5x3NVgRtYwmA==
 
 tailwindcss@^3.4.0:
   version "3.4.19"

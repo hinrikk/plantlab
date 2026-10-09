@@ -1,5 +1,7 @@
 import { useAuth } from '../context/AuthContext';
 
+const API_URL = 'http://192.168.178.32:3000';
+
 export function usePlantsApi() {
   const { token } = useAuth();
 
@@ -58,9 +60,24 @@ export function usePlantsApi() {
     return response.json();
   }
 
+  async function deletePlant(plantId: number) {
+    const response = await fetch(`${API_URL}/plants/${plantId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const message = await response.text();
+      throw new Error(`Failed to delete plant: ${response.status} ${message}`);
+    }
+  }
+
   return {
     getPlants,
     addDeviceToPlant,
     createPlant,
+    deletePlant,
   };
 }

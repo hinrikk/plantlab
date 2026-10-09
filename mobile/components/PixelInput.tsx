@@ -12,7 +12,7 @@ export default function PixelInput({ value, onChangeText, ...props }: PixelInput
       <TextInput
         value={value}
         onChangeText={onChangeText}
-        className="font-pixel text-lg text-black"
+        className="font-pixelTitle text-lg text-black"
         {...props}
       />
     </PixelPanel>

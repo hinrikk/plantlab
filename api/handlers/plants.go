@@ -191,3 +191,37 @@ func GetPlants(db *gorm.DB) http.HandlerFunc {
 		json.NewEncoder(w).Encode(response)
 	}
 }
+
+func DeletePlant(db *gorm.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// Get authenticated user
+		userID, ok := r.Context().Value(middleware.UserIDKey).(int64)
+
+		if !ok {
+			http.Error(w, "User not found in context", http.StatusUnauthorized)
+			return
+		}
+
+		// Get plant ID from URL
+		plantID := r.PathValue("plantID")
+
+		// Delete only if the plant belongs to the user
+		result := db.WithContext(r.Context()).
+			Where("id = ? AND user_id = ?", plantID, userID).
+			Delete(&models.Plant{})
+
+		if result.Error != nil {
+			http.Error(w, "Failed to delete plant", http.StatusInternalServerError)
+			return
+		}
+
+		// Check whether a plant was actually deleted
+		if result.RowsAffected == 0 {
+			http.Error(w, "Plant not found", http.StatusNotFound)
+			return
+		}
+
+		// Success, no response body
+		w.WriteHeader(http.StatusNoContent)
+	}
+}

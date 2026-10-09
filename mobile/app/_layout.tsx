@@ -5,6 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
 
 import { AuthProvider, useAuth } from '../context/AuthContext';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 function RootNavigator() {
   const { token } = useAuth();
@@ -17,6 +18,12 @@ function RootNavigator() {
 
       <Stack.Protected guard={!!token}>
         <Stack.Screen name="home" />
+        <Stack.Screen
+          name="settings"
+          options={{
+            animation: 'slide_from_left',
+          }}
+        />
       </Stack.Protected>
     </Stack>
   );
@@ -35,10 +42,12 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaProvider>
-      <AuthProvider>
-        <RootNavigator />
-      </AuthProvider>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <AuthProvider>
+          <RootNavigator />
+        </AuthProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }

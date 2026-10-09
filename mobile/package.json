@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@shopify/react-native-skia": "2.6.2",
-    "expo": "~56.0.4",
-    "expo-constants": "~56.0.26",
+    "expo": "~56.0.23",
+    "expo-constants": "~56.0.27",
     "expo-linking": "~56.0.18",
     "expo-router": "~56.2.21",
     "expo-secure-store": "~56.0.4",
@@ -22,10 +22,12 @@
     "nativewind": "latest",
     "react": "19.2.3",
     "react-native": "0.85.3",
+    "react-native-gesture-handler": "~2.31.1",
     "react-native-reanimated": "4.3.1",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-screens": "~4.26.0",
-    "react-native-worklets": "0.8.3"
+    "react-native-worklets": "0.8.3",
+    "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

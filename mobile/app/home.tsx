@@ -40,7 +40,7 @@ export default function Home() {
 
   async function handleAddPlant() {
     try {
-      await createPlant('Super New Plant');
+      await createPlant('Super Plant');
       await loadPlants();
     } catch (error) {
       console.error('Failed to create plant:', error);

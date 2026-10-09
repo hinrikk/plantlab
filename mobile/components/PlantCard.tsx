@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
-
+import { router } from 'expo-router';
 import PixelButton from './PixelButton';
 import PixelInput from './PixelInput';
 import PixelPanel from './PixelPanel';
@@ -67,25 +67,39 @@ export default function PlantCard({ plant, onDeviceAdded }: Props) {
           </Pressable>
         )}>
         <View className="bg-white">
-          <View className="flex-row bg-orange-400">
-            <View className="flex-[3] items-center justify-between bg-yellow">
-              <PixelSprite source={require('../assets/pixel/Flask2.png')} scale={4} />
+          <View className="gap flex-row">
+            <View className="flex-[3] items-center justify-end pr-4">
+              <PixelSprite source={require('../assets/pixel/Flask2.png')} scale={4} idle />
             </View>
 
             {plant.device_id !== null ? (
-              <View className="flex-[4] gap-2 bg-green">
+              <View className="flex-[4] gap-2">
                 <View className="flex-row">
                   <UnitDisplay
                     value={plant.latest_reading?.temperature.toFixed(1) ?? '--'}
                     unit={'°'}
+                    title={'Temperatur'}
                   />
-                  <UnitDisplay value={plant.latest_reading?.humidity.toFixed(0) ?? '--'} unit="%" />
+                  <UnitDisplay
+                    value={plant.latest_reading?.humidity.toFixed(0) ?? '--'}
+                    unit="%"
+                    title={'Luftfeucht.'}
+                  />
                 </View>
 
                 <View className="flex-row">
                   <UnitDisplay
-                    value={plant.latest_reading?.light_lux.toFixed(0) ?? '--'}
+                    value={plant.latest_reading?.light_lux.toFixed(1) ?? '--'}
                     unit="lux"
+                    title={'Helligkeit'}
+                  />
+                </View>
+
+                <View className="flex-row">
+                  <UnitDisplay
+                    value={plant.latest_reading ? 'feucht' : '--'}
+                    unit=" "
+                    title={'Bodenfeuchtigkeit'}
                   />
                 </View>
               </View>
@@ -103,8 +117,13 @@ export default function PlantCard({ plant, onDeviceAdded }: Props) {
             )}
           </View>
 
-          <View className="mt-4 flex-row bg-orange-800">
-            <Text className="font-pixelTitle text-4xl">{plant.name}</Text>
+          <View className="mt-4 flex-row items-center justify-between">
+            <Text className="font-pixelTitle text-5xl">{plant.name}</Text>
+            <PixelIconButton
+              source={require('../assets/pixel/Arrow-Right.png')}
+              onPress={() => console.log('details')}
+              scale={2}
+            />
           </View>
         </View>
       </Swipeable>

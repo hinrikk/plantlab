@@ -74,10 +74,26 @@ export function usePlantsApi() {
     }
   }
 
+  async function updatePlant(id: number, name: string) {
+    const response = await fetch(`${API_URL}/plants/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ name }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update plant');
+    }
+  }
+
   return {
     getPlants,
     addDeviceToPlant,
     createPlant,
     deletePlant,
+    updatePlant,
   };
 }

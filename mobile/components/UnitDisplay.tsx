@@ -13,7 +13,7 @@ export const UnitDisplay: React.FC<UnitDisplayProps> = ({ value, unit, title }) 
         <Text className="font-pixelTitle text-4xl">{value}</Text>
         <Text className="font-pixelTitle text-2xl">{unit}</Text>
       </View>
-      <Text className="font-pixelTitle">{title}</Text>
+      <Text className="font-pixelTitle text-lg">{title}</Text>
     </View>
   );
 };

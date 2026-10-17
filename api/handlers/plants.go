@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 	"time"
 
 	"plantlab/api/middleware"
@@ -30,6 +31,10 @@ type PlantResponse struct {
 	Name          string           `json:"name"`
 	DeviceID      *int64           `json:"device_id"`
 	LatestReading *ReadingResponse `json:"latest_reading"`
+}
+
+type UpdatePlantRequest struct {
+	Name string `json:"name"`
 }
 
 func CreatePlant(db *gorm.DB) http.HandlerFunc {
@@ -222,6 +227,50 @@ func DeletePlant(db *gorm.DB) http.HandlerFunc {
 		}
 
 		// Success, no response body
+		w.WriteHeader(http.StatusNoContent)
+	}
+}
+
+func UpdatePlant(db *gorm.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		userID, ok := r.Context().Value(middleware.UserIDKey).(int64)
+		if !ok {
+			http.Error(w, "User not found in context", http.StatusUnauthorized)
+			return
+		}
+
+		plantID := r.PathValue("plantID")
+
+		var req UpdatePlantRequest
+
+		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+			http.Error(w, "Invalid JSON", http.StatusBadRequest)
+			return
+		}
+
+		req.Name = strings.TrimSpace(req.Name)
+
+		if req.Name == "" || len([]rune(req.Name)) > 50 {
+			http.Error(w, "Plant name must contain 1-50 characters", http.StatusBadRequest)
+			return
+		}
+
+		// Update only plants belonging to the authenticated user
+		result := db.WithContext(r.Context()).
+			Model(&models.Plant{}).
+			Where("id = ? AND user_id = ?", plantID, userID).
+			Update("name", req.Name)
+
+		if result.Error != nil {
+			http.Error(w, "Failed to update plant", http.StatusInternalServerError)
+			return
+		}
+
+		if result.RowsAffected == 0 {
+			http.Error(w, "Plant not found", http.StatusNotFound)
+			return
+		}
+
 		w.WriteHeader(http.StatusNoContent)
 	}
 }

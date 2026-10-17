@@ -25,11 +25,13 @@ type Plant = {
 type Props = {
   plant: Plant;
   onDeviceAdded: () => void;
+  onDelete: () => void;
+  onEdit: () => void;
 };
 
-export default function PlantCard({ plant, onDeviceAdded }: Props) {
+export default function PlantCard({ plant, onDeviceAdded, onDelete, onEdit }: Props) {
   const [deviceId, setDeviceId] = useState('');
-  const { addDeviceToPlant, deletePlant } = usePlantsApi();
+  const { addDeviceToPlant } = usePlantsApi();
 
   async function handleAddDevice() {
     if (!deviceId.trim()) {
@@ -44,15 +46,6 @@ export default function PlantCard({ plant, onDeviceAdded }: Props) {
     }
   }
 
-  async function handleDeletePlant() {
-    try {
-      await deletePlant(plant.id);
-      await onDeviceAdded();
-    } catch (error) {
-      console.error('Failed to delete plant:', error);
-    }
-  }
-
   return (
     <PixelPanel source={require('../assets/pixel/panel.png')} scale={4}>
       <Swipeable
@@ -60,11 +53,15 @@ export default function PlantCard({ plant, onDeviceAdded }: Props) {
         rightThreshold={40}
         overshootRight={false}
         renderRightActions={() => (
-          <Pressable
-            onPress={handleDeletePlant}
-            className="w-28 items-center justify-center bg-red-500">
-            <Text className="font-pixelTitle text-xl text-white">DELETE</Text>
-          </Pressable>
+          <View className="ml-4 flex-row">
+            <Pressable onPress={onEdit} className="w-28 items-center justify-center bg-yellow">
+              <Text className="font-pixelTitle text-xl text-black">EDIT</Text>
+            </Pressable>
+
+            <Pressable onPress={onDelete} className="w-28 items-center justify-center bg-red-500">
+              <Text className="font-pixelTitle text-xl text-white">DELETE</Text>
+            </Pressable>
+          </View>
         )}>
         <View className="bg-white">
           <View className="gap flex-row">
@@ -78,12 +75,12 @@ export default function PlantCard({ plant, onDeviceAdded }: Props) {
                   <UnitDisplay
                     value={plant.latest_reading?.temperature.toFixed(1) ?? '--'}
                     unit={'°'}
-                    title={'Temperatur'}
+                    title={'Temp.'}
                   />
                   <UnitDisplay
                     value={plant.latest_reading?.humidity.toFixed(0) ?? '--'}
                     unit="%"
-                    title={'Luftfeucht.'}
+                    title={'Air Humid.'}
                   />
                 </View>
 
@@ -91,16 +88,21 @@ export default function PlantCard({ plant, onDeviceAdded }: Props) {
                   <UnitDisplay
                     value={plant.latest_reading?.light_lux.toFixed(1) ?? '--'}
                     unit="lux"
-                    title={'Helligkeit'}
+                    title={'Illuminance'}
                   />
                 </View>
 
-                <View className="flex-row">
-                  <UnitDisplay
-                    value={plant.latest_reading ? 'feucht' : '--'}
-                    unit=" "
-                    title={'Bodenfeuchtigkeit'}
-                  />
+                <View className="relative flex-col gap-2 self-start">
+                  <PixelSprite source={require('../assets/pixel/Colorbar.png')} scale={5} />
+                  <Text className="font-pixelTitle text-lg">{'Soil Humidity'}</Text>
+                  <View
+                    className="absolute top-0"
+                    style={{
+                      left: '50%',
+                      transform: [{ translateX: -8 }],
+                    }}>
+                    <PixelSprite source={require('../assets/pixel/Marker.png')} scale={2} />
+                  </View>
                 </View>
               </View>
             ) : (
@@ -119,11 +121,11 @@ export default function PlantCard({ plant, onDeviceAdded }: Props) {
 
           <View className="mt-4 flex-row items-center justify-between">
             <Text className="font-pixelTitle text-5xl">{plant.name}</Text>
-            <PixelIconButton
+            {/* <PixelIconButton
               source={require('../assets/pixel/Arrow-Right.png')}
               onPress={() => console.log('details')}
               scale={2}
-            />
+            /> */}
           </View>
         </View>
       </Swipeable>

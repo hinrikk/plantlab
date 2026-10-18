@@ -9,21 +9,24 @@
 #include "api.h"
 #include "light_sensor.h"
 #include "environment_sensor.h"
+#include "soil_sensor.h"
 
 static void read_sensors_task(void *arg)
 {
     while (1)
     {
         float lux = light_sensor_read_lux();
+        int soil = soil_sensor_read();
 
         environment_reading_t environment =
             environment_sensor_read();
 
         ESP_LOGI("sensors",
-            "Light: %.2f lux | Temp: %.2f C | Humidity: %.2f %%",
+            "Light: %.2f lux | Temp: %.2f C | Humidity: %.2f %% | Soil: %d",
             lux,
             environment.temperature,
-            environment.humidity
+            environment.humidity,
+            soil
         );
 
         // id currently hardcoded, later: make device identity/configuration more robust
@@ -45,6 +48,7 @@ void app_main(void)
     wifi_init();
     light_sensor_init();
     environment_sensor_init();
+    soil_sensor_init();
 
     xTaskCreate(
         read_sensors_task,

@@ -66,7 +66,7 @@ export default function PlantCard({ plant, onDeviceAdded, onDelete, onEdit }: Pr
         <View className="bg-white">
           <View className="gap flex-row">
             <View className="flex-[3] items-center justify-end pr-4">
-              <PixelSprite source={require('../assets/pixel/Flask2.png')} scale={4} idle />
+              <PixelSprite source={require('../assets/pixel/plants/Cactus.png')} scale={2} idle />
             </View>
 
             {plant.device_id !== null ? (

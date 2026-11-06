@@ -16,8 +16,8 @@ void light_sensor_init(void)
     // Configure I2C bus
     i2c_master_bus_config_t bus_config = {
         .i2c_port = I2C_NUM_0,
-        .sda_io_num = GPIO_NUM_8,
-        .scl_io_num = GPIO_NUM_9,
+        .sda_io_num = GPIO_NUM_9,
+        .scl_io_num = GPIO_NUM_8,
         .clk_source = I2C_CLK_SRC_DEFAULT,
         .glitch_ignore_cnt = 7,
         .flags.enable_internal_pullup = true,

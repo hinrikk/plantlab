@@ -76,13 +76,31 @@ static void bme680_delay_us(uint32_t period, void *intf_ptr)
     esp_rom_delay_us(period);
 }
 
+#include "driver/i2c_master.h"
+#include "esp_log.h"
+
+static void scan_i2c_bus(i2c_master_bus_handle_t bus_handle)
+{
+    ESP_LOGI("i2c_scan", "Scanning I2C bus...");
+
+    for (uint8_t addr = 0x08; addr <= 0x77; addr++) {
+        esp_err_t err = i2c_master_probe(bus_handle, addr, 100);
+
+        if (err == ESP_OK) {
+            ESP_LOGI("i2c_scan", "Device found at 0x%02X", addr);
+        }
+    }
+
+    ESP_LOGI("i2c_scan", "Scan finished");
+}
+
 void environment_sensor_init(void)
 {
     // Create second I2C bus for BME680
     i2c_master_bus_config_t bus_config = {
         .i2c_port = I2C_NUM_1,
-        .sda_io_num = GPIO_NUM_11,
-        .scl_io_num = GPIO_NUM_12,
+        .sda_io_num = GPIO_NUM_16,
+        .scl_io_num = GPIO_NUM_15,
         .clk_source = I2C_CLK_SRC_DEFAULT,
         .glitch_ignore_cnt = 7,
         .flags.enable_internal_pullup = true,
@@ -106,6 +124,9 @@ void environment_sensor_init(void)
             &sensor
         )
     );
+
+    esp_err_t err = i2c_master_probe(bus, 0x77, 1000);
+    ESP_LOGI("BME680", "Probe 0x77: %s", esp_err_to_name(err));
 
     /*
      * Give the Bosch driver our ESP32-specific functions.

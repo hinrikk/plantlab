@@ -7,7 +7,7 @@ on:
       - dev
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,6 +30,11 @@ jobs:
           push: true
           tags: hinrikk/plantlab-api:latest
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Set up kubectl
         uses: azure/setup-kubectl@v4
 
@@ -40,10 +45,6 @@ jobs:
           mkdir -p ~/.kube
           printf '%s' "$KUBE_CONFIG" > ~/.kube/config
           chmod 600 ~/.kube/config
-
-      - name: Verify Kubernetes connection
-        run: |
-          kubectl get deployment plantlab-api -n plantlab
 
       - name: Deploy API
         run: |

@@ -14,6 +14,10 @@ rules:
     resources: ["deployments"]
     resourceNames: ["plantlab-api"]
     verbs: ["get", "patch"]
+
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["list", "watch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding

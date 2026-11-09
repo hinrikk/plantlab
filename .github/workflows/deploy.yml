@@ -1,4 +1,5 @@
-name: Build PlantLab API
+
+name: Build and Deploy PlantLab API
 
 on:
   push:
@@ -6,7 +7,7 @@ on:
       - dev
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,5 +28,24 @@ jobs:
         with:
           context: ./api
           push: true
-          tags: |
-            hinrikk/plantlab-api:latest
+          tags: hinrikk/plantlab-api:latest
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Configure Kubernetes authentication
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+        run: |
+          mkdir -p ~/.kube
+          printf '%s' "$KUBE_CONFIG" > ~/.kube/config
+          chmod 600 ~/.kube/config
+
+      - name: Verify Kubernetes connection
+        run: |
+          kubectl get deployment plantlab-api -n plantlab
+
+      - name: Deploy API
+        run: |
+          kubectl rollout restart deployment/plantlab-api -n plantlab
+          kubectl rollout status deployment/plantlab-api -n plantlab --timeout=180s

@@ -1,31 +1,47 @@
-name: Build PlantLab API
-
-on:
-  push:
-    branches:
-      - dev
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: ./api
-          push: true
-          tags: |
-            hinrikk/plantlab-api:latest
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plantlab-api
+  namespace: plantlab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: plantlab-api
+  template:
+    metadata:
+      labels:
+        app: plantlab-api
+    spec:
+      containers:
+        - name: api
+          image: hinrikk/plantlab-api:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: api-secret
+                  key: DATABASE_URL
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: plantlab-api
+  namespace: plantlab
+spec:
+  selector:
+    app: plantlab-api
+  ports:
+    - port: 3000
+      targetPort: 3000
+  type: ClusterIP

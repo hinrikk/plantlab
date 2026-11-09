@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: plantlab-api
+  namespace: plantlab
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - plantlab-api.magicalotter.de
+      secretName: plantlab-api-tls
+  rules:
+    - host: plantlab-api.magicalotter.de
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: plantlab-api
+                port:
+                  number: 3000
